@@ -14,8 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("api/schema/", SpectacularAPIView.as_view(), name="api-schema"), #this will generate the schema file we need i.e the yaml file that describes the api
+    path("api/docs", SpectacularSwaggerView.as_view(url_name="api-schema"), name="api-docs"), #this will tell which schema to use when swagger is opened i.e serve the swagger doc that will use the schema to show GUI for our documentation
+    path('api/user/', include('user.urls'))
 ]
