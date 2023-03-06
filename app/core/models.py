@@ -1,5 +1,6 @@
 """ Database models """
 
+from django.conf import settings
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin)
 from django.db import models
@@ -40,3 +41,33 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
     #defines the field that we want to use for authentication, this is how we can replace the username default field that comes with default user model to our custom email field.
     USERNAME_FIELD = "email"
+
+
+class Tag(models.Model):
+    """ Tag for filtering recipes """
+    name = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class Recipe(models.Model):
+    """ Recipe object """
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    time_minutes = models.IntegerField()
+    price = models.DecimalField(max_digits=5, decimal_places=2)
+    link = models.CharField(max_length=255)
+    tags = models.ManyToManyField('Tag')
+
+    def __str__(self):
+        return self.title
+    

@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("api/schema/", SpectacularAPIView.as_view(), name="api-schema"), #this will generate the schema file we need i.e the yaml file that describes the api
     path("api/docs", SpectacularSwaggerView.as_view(url_name="api-schema"), name="api-docs"), #this will tell which schema to use when swagger is opened i.e serve the swagger doc that will use the schema to show GUI for our documentation
-    path('api/user/', include('user.urls'))
+    path('api/user/', include('user.urls')),
+    path('api/recipe/', include('recipe.urls'))
 ]
