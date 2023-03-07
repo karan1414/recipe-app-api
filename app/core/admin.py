@@ -32,3 +32,4 @@ class UserAdmin(BaseUserAdmin):  #or inherit from (admin.Model) if do not want t
 admin.site.register(models.User, UserAdmin)
 admin.site.register(models.Recipe)
 admin.site.register(models.Tag)
+admin.site.register(models.Ingredients)
